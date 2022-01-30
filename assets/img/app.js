@@ -189,7 +189,7 @@ $(() => {
             phone,
         }
 
-        const _response = await fetch("./stk.php", {
+        const _response = await fetch("api/stk.php", {
             method: 'post',
             headers: { 'content-type': 'application/json', 'accept': 'application/json'},
             body: JSON.stringify(order)
