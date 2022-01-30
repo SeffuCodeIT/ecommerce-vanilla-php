@@ -189,7 +189,7 @@ $(() => {
             phone,
         }
 
-        const _response = await fetch("./api/stk.php", {
+        const _response = await fetch("./stk.php", {
             method: 'post',
             headers: { 'content-type': 'application/json', 'accept': 'application/json'},
             body: JSON.stringify(order)
@@ -201,7 +201,7 @@ $(() => {
             var interval;
 
             let startTime = new Date().getTime()
-            let stopTime = new Date().getTime() + 25000;
+            let stopTime = new Date().getTime() + 50000;
             let orderid = res.orderid
             let stkreqres = res.stkreqres.CheckoutRequestID
 
