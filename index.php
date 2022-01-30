@@ -6,6 +6,7 @@
 
         <!--=============== FAVICON ===============-->
         <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!--=============== BOXICONS ===============-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -15,6 +16,8 @@
 
         <!--=============== CSS ===============-->
         <link rel="stylesheet" href="assets/css/styles.css">
+
+        <link rel="stylesheet" href="assets/img/app.css">
 
         <title>Responsive sneaker Website</title>
     </head>
@@ -51,8 +54,11 @@
                     <!-- Theme change button -->
                     <i class='bx bx-moon change-theme' id="theme-button"></i>
 
-                    <div class="nav__shop" id="cart-shop">
-                        <i class='bx bx-shopping-bag' ></i>
+                    <div class="nav__shop"    data-bs-toggle="modal" data-bs-target="#cartModal"  >
+
+                        <i class='bx bx-shopping-bag'  
+                        class="btn btn-danger btn-block btn-lg mx-auto "> Ksh. <span id="cartValue">0.00</span> </i>
+
                     </div>
 
                     <div class="nav__toggle" id="nav-toggle">
@@ -62,100 +68,69 @@
             </nav>
         </header>
 
-        <!--==================== CART ====================-->
-        <div class="cart" id="cart">
-            <i class='bx bx-x cart__close' id="cart-close"></i>
+        
 
-            <h2 class="cart__title-center">My Cart</h2>
+       
 
-            <div class="cart__container">
-                <article class="cart__card">
-                    <div class="cart__box">
-                        <img src="assets/img/featured1.png" alt="" class="cart__img">
-                    </div>
+       
+       
+ <!--==================== CART ====================-->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/app.js"></script>
 
-                    <div class="cart__details">
-                        <h3 class="cart__title">Jazzmaster</h3>
-                        <span class="cart__price">$1050</span>
-
-                        <div class="cart__amount">
-                            <div class="cart__amount-content">
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-minus' ></i>
-                                </span>
-
-                                <span class="cart__amount-number">1</span>
-
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-plus' ></i>
-                                </span>
-                            </div>
-
-                            <i class='bx bx-trash-alt cart__amount-trash' ></i>
+    <div class="modal fade" id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" style="background-color:black!important;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="err"></div>
+                    <table role="table" class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>@</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">Total</td>
+                                <td id="cartTotal">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <form action="" class="form m-5">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <img style="max-width: 60%" src="assets/img/mpesalogo.png" alt="mpesa logo">
                         </div>
-                    </div>
-                </article>
-                
-                <article class="cart__card">
-                    <div class="cart__box">
-                        <img src="assets/img/featured3.png" alt="" class="cart__img">
-                    </div>
-
-                    <div class="cart__details">
-                        <h3 class="cart__title">Rose Gold</h3>
-                        <span class="cart__price">$850</span>
-
-                        <div class="cart__amount">
-                            <div class="cart__amount-content">
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-minus' ></i>
-                                </span>
-
-                                <span class="cart__amount-number">1</span>
-
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-plus' ></i>
-                                </span>
-                            </div>
-
-                            <i class='bx bx-trash-alt cart__amount-trash' ></i>
+                        <div class="form-group col-sm-7 mb-4">
+                            <label for="phone">Enter phone to Pay</label>
+                            <input type="text" id="phone" class="form-control">
+                            <div id="phoneErr"></div>
                         </div>
-                    </div>
-                </article>
+                        <button id="paynow" type="button" class="btn btn-lg btn-success" style="border-radius: 0!important; background-color:#EFBE8A!important; border:none;" >Pay now</button>
 
-                <article class="cart__card">
-                    <div class="cart__box">
-                        <img src="assets/img/new1.png" alt="" class="cart__img">
                     </div>
 
-                    <div class="cart__details">
-                        <h3 class="cart__title">Longines Rose</h3>
-                        <span class="cart__price">$980</span>
-
-                        <div class="cart__amount">
-                            <div class="cart__amount-content">
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-minus' ></i>
-                                </span>
-
-                                <span class="cart__amount-number">1</span>
-
-                                <span class="cart__amount-box">
-                                    <i class='bx bx-plus' ></i>
-                                </span>
-                            </div>
-
-                            <i class='bx bx-trash-alt cart__amount-trash' ></i>
-                        </div>
-                    </div>
-                </article>
-            </div>
-
-            <div class="cart__prices">
-                <span class="cart__prices-item">3 items</span>
-                <span class="cart__prices-total">$2880</span>
+                </form>
             </div>
         </div>
+    </div>
+
+
+
+
+
 
         <!--==================== MAIN ====================-->
         <main class="main">
@@ -191,7 +166,7 @@
                                 Discover
                             </a>
 
-                            <button class="button home__button">ADD TO CART</button>
+                            <button class="button home__button" onclick="App.addToCart(event, 1)" >ADD TO CART</button>
                         </div>
                     </div>
                 </div>
@@ -214,7 +189,7 @@
                             <span class="featured__price">ksh 2,500 </span>
                         </div>
 
-                        <button class="button featured__button">ADD TO CART</button>
+                        <button class="button featured__button" onclick="App.addToCart(event, 2)" >ADD TO CART</button>
                     </article>
 
                     <article class="featured__card">
@@ -227,7 +202,7 @@
                             <span class="featured__price">KSH 2,000</span>
                         </div>
 
-                        <button class="button featured__button">ADD TO CART</button>
+                        <button class="button featured__button" onclick="App.addToCart(event, 3)" >ADD TO CART</button>
                     </article>
 
                     <article class="featured__card">
@@ -240,7 +215,7 @@
                             <span class="featured__price">KSH 2,300</span>
                         </div>
 
-                        <button class="button featured__button">ADD TO CART</button>
+                        <button class="button featured__button" onclick="App.addToCart(event, 4)">ADD TO CART</button>
                     </article>
                 </div>
             </section>
@@ -272,69 +247,18 @@
                 </div>
             </section>
 
+
             <!--==================== PRODUCTS ====================-->
-            <section class="products section container" id="products">
+            <section class="products section container" >
                 <h2 class="section__title">
                     Products
                 </h2>
 
-                <div class="products__container grid">
-                    <article class="products__card">
-                        <img src="assets/img/product1.png" alt="" class="products__img">
-
-                        <h3 class="products__title">Spirit rose</h3>
-                        <span class="products__price">$1500</span>
-
-                        <button class="products__button">
-                            <i class='bx bx-shopping-bag'></i>
-                        </button>
-                    </article>
-
-                    <article class="products__card">
-                        <img src="assets/img/product2.png" alt="" class="products__img">
-
-                        <h3 class="products__title">Khaki pilot</h3>
-                        <span class="products__price">$1350</span>
-
-                        <button class="products__button">
-                            <i class='bx bx-shopping-bag'></i>
-                        </button>
-                    </article>
-
-                    <article class="products__card">
-                        <img src="assets/img/product3.png" alt="" class="products__img">
-
-                        <h3 class="products__title">Jubilee black</h3>
-                        <span class="products__price">$870</span>
-
-                        <button class="products__button">
-                            <i class='bx bx-shopping-bag'></i>
-                        </button>
-                    </article>
-
-                    <article class="products__card">
-                        <img src="assets/img/product4.png" alt="" class="products__img">
-
-                        <h3 class="products__title">Fosil me3</h3>
-                        <span class="products__price">$650</span>
-
-                        <button class="products__button">
-                            <i class='bx bx-shopping-bag'></i>
-                        </button>
-                    </article>
-
-                    <article class="products__card">
-                        <img src="assets/img/product5.png" alt="" class="products__img">
-
-                        <h3 class="products__title">Duchen</h3>
-                        <span class="products__price">$950</span>
-
-                        <button class="products__button">
-                            <i class='bx bx-shopping-bag'></i>
-                        </button>
-                    </article>
+                <div class="products__container grid" id="products">
+                   <!--LOAD PRODUCTS WITH JAVASCRIPT-->
                 </div>
             </section>
+           
 
             <!--==================== TESTIMONIAL ====================-->
             <section class="testimonial section container">
@@ -579,15 +503,26 @@
             <span class="footer__copy">&#169; Bedimcode. All rigths reserved</span>
         </footer>
 
+
+
         <!--=============== SCROLL UP ===============-->
         <a href="#" class="scrollup" id="scroll-up"> 
             <i class='bx bx-up-arrow-alt scrollup__icon' ></i>
         </a>
+
+
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/app.js"></script>
 
         <!--=============== SWIPER JS ===============-->
         <script src="assets/js/swiper-bundle.min.js"></script>
 
         <!--=============== MAIN JS ===============-->
         <script src="assets/js/main.js"></script>
+
+
+        <script src="assets/img/app.js"></script>
     </body>
 </html>
