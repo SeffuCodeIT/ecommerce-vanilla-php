@@ -204,7 +204,7 @@ $(document).ready(function () {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(order),
+      body: JSON.parse(order),
     });
 
     // show mpesa modal
