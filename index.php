@@ -57,7 +57,7 @@
                     <div class="nav__shop"    data-bs-toggle="modal" data-bs-target="#cartModal"  >
 
                         <i class='bx bx-shopping-bag'  
-                        class="btn btn-danger btn-block btn-lg mx-auto "> Ksh. <span id="cartValue">0.00</span> </i>
+                        class="btn btn-danger btn-block btn-lg mx-auto "> <!-- <spanz id="cartValue">0.00</spanz>--> </i>
 
                     </div>
 
