@@ -199,7 +199,7 @@ $(document).ready(function () {
     };
 
     // // send order to server
-    const response = await fetch("./api.php", {
+    const response = await fetch("api.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -265,7 +265,7 @@ $(document).ready(function () {
           // - Use the m-pesa endpoint
           // - Use the transaction/order data
           try {
-            const _result = await fetch("./polling.php", {
+            const _result = await fetch("polling.php", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
