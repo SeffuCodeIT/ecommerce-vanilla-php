@@ -265,7 +265,7 @@ $(document).ready(function () {
           // - Use the m-pesa endpoint
           // - Use the transaction/order data
           try {
-            const _result = await fetch("pay/poll.php", {
+            const _result = await fetch("./polling.php", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
