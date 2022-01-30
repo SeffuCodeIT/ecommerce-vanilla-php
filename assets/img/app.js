@@ -219,23 +219,21 @@ $(() => {
                 }
 
                 // method 1
-                 const poll = await fetch('api/orders/' + orderid + '-payment.json')
+                //- const poll = await fetch('api/orders/' + orderid + '-payment.json')
 
                  if(poll.status == 200) {
                      const _poll = await poll.json()
                      const { Body } = _poll
 
                      if(Body.stkCallback.ResultCode !== 0){
-                     alert(Body.stkCallback.ResultDesc)
-                 }
+                         alert(Body.stkCallback.ResultDesc)
+                     }
                      if(Body.stkCallback.ResultCode === 0){
                          alert(Body.stkCallback.ResultDesc)
-                        window.location.reload()
+                         window.location.reload()
                      }
                      clearInterval(interval)
                  } 
-
-                };
 /*
                 // method 2
                 const _poll = await fetch('api/polling.php?id=' + stkreqres)
@@ -261,13 +259,19 @@ $(() => {
                 }
             }
 
+
+            
+
             interval = setInterval(callback, 2000)
 
         } else {
             $("#err").html(`<p class="alert alert-danger">${_response.statusText}</p>`)
         }
+*/
 
+
+    }}
     })
 
 
-})  */
+})
