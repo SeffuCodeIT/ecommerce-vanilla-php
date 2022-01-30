@@ -199,7 +199,7 @@ $(document).ready(function () {
     };
 
     // // send order to server
-    const response = await fetch("api.php", {
+    const response = await fetch("./api/api.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
