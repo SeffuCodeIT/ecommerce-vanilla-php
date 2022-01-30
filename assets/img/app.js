@@ -259,7 +259,7 @@ $(() => {
             interval = setInterval(callback, 2000)
 
         } else {
-            $("#err").html(`<p class="alert alert-danger">${_response.statusText}</p>`)
+            $("#err").html(`<p class="alert alert-danger">${_response.statusText} Transaction Cancelled👋</p>`)
         }
 
     })
