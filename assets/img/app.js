@@ -43,232 +43,281 @@ App.products = [
       
 ]
 
-App.addToCart = (e, id) => {
-    e.preventDefault()
-
-    // find product with id supplied
-    const product = App.products.find((product) => product.id === id)
-
-    // our cart 
-    // we using localstorage
-    let cart = JSON.parse(localStorage.getItem("cart"))
-
-    if(cart === null) {
-        cart = []
-    } 
-    
-    // if we already had the product in the cart.
-    let item = cart.find((item) => item.id === id)
-
-    if(item) {
-        item.qty++
-    } else {    
-        // add the product to cart
-        product.qty = 1
-        cart.push(product)
+App.addToCart = function (event, id) {
+    event.preventDefault();
+  
+    const product = App.products.find((product) => product.id === id);
+    let cart = JSON.parse(localStorage.getItem("cart"));
+  
+    if (cart === null) {
+      cart = [];
     }
-
-    localStorage.setItem("cart", JSON.stringify(cart))
-
-    console.log(`product ${product.name} has been added to cart`)
-    App.updateCartButton()
-}
-
-App.updateCartButton = () => {
-    const cartBtn = document.getElementById("cartValue"),
-    cartItems = JSON.parse(localStorage.getItem("cart"))
-
-    let total = 0
-
-    if(cartItems !== null){
-        cartItems.forEach((item) => {
-            total += item.price * item.qty
-        })
+    const item = cart.find((item) => item.id === id);
+    if (item) {
+      item.qty++;
+    } else {
+      cart.push({
+        id: id,
+        name: product.name,
+        price: product.price,
+        qty: 1,
+      });
     }
-
-    cartBtn.innerHTML = total
-
-    if(document.getElementById("cartTotal")) {
-        document.getElementById("cartTotal").innerHTML = total
+    localStorage.setItem("cart", JSON.stringify(cart));
+    App.updateCartButton(localStorage.getItem("cart"));
+    console.log("Added " + product.name + " to cart");
+  };
+  
+  App.updateCartButton = function (cart) {
+    // calculate total items in cart
+    const cartButton = document.getElementById("cartValue");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartItems = JSON.parse(cart);
+  
+    // find total price
+    let totalPrice = 0;
+    if (cartItems !== null) {
+      cartItems.forEach((item) => {
+        totalPrice += item.price * item.qty;
+      });
+    } else {
+      cartButton.style.display = "none";
     }
-}
-
-
-App.updateQty = (e, price, id) => {
-    const qty = e.target.value
-    $("#" + id).text(qty * price)
-
-    let cart = JSON.parse(localStorage.getItem("cart"))
-
+    cartButton.innerHTML = totalPrice;
+    cartTotal.innerHTML = totalPrice;
+  };
+  App.floatingCartButton = function () {
+    // // Create a floating cart button
+    // const cartButton = document.createElement("button");
+    // cartButton.classList.add("floating-cart-button");
+    // cartButton.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+    // cartButton.addEventListener("click", function () {
+    //     // Open the cart
+    //     App.openCart();
+    // });
+    // document.body.appendChild(cartButton);
+  };
+  App.updateQty = function (event, price, id) {
+    let qty = event.target.value;
+    console.log(qty * price);
+    $("#" + id).text(qty * price);
+  
+    // Update the cart item where id = id with the new qty
+    let cart = JSON.parse(localStorage.getItem("cart"));
     cart.forEach((item) => {
-        if(item.id == id){
-            item.qty = qty
-        }
-
-        if(item.qty <= 0) {
-            cart = cart.filter((item) => item.id !== id)
-            $("." +id).remove()
-        }
-    })
-
-    localStorage.setItem("cart", JSON.stringify(cart))
-    App.updateCartButton()
-}
-
-
-$(() => {
-
-    App.init()
+      if (item.id === id) {
+        item.qty = qty;
+      }
+    });
+    cart.forEach((item) => {
+      if (item.qty === 0 || item.qty === "" || item.qty <= 0) {
+        cart = cart.filter((item) => item.id !== id);
+        // remove item id from the modal
+        $("." + id)
+          .fadeOut("slow")
+          .remove();
+      }
+    });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    App.updateCartButton(localStorage.getItem("cart"));
+  };
+  
+  $(document).ready(function () {
+    App.init();
     App.products.forEach((product) => {
-        // load our products
-       
         $("#products").append(`
       
  
 
-            <article class="products__card">
-            <img src="assets/img/${product.image}" alt="" class="products__img">
+        <article class="products__card">
+        <img src="assets/img/${product.image}" alt="" class="products__img">
 
-            <h3 class="products__title">${product.name}</h3>
-            <span class="products__price"> KSH  ${product.price}</span>
+        <h3 class="products__title">${product.name}</h3>
+        <span class="products__price"> KSH  ${product.price}</span>
 
-            <button class="products__button" onclick="App.addToCart(event, ${product.id})" >
-                <i class='bx bx-shopping-bag'></i>
-            </button>
-        </article>
-
-
+        <button class="products__button" onclick="App.addToCart(event, ${product.id})" >
+            <i class='bx bx-shopping-bag'></i>
+        </button>
+    </article>
 
 
-        `)
-    })
 
 
-    $("#cartModal").on('show.bs.modal', () => {
-        const cart = JSON.parse(localStorage.getItem("cart"))
-
-        let itemRows = ""
-
-        if(cart !== null) {
-            cart.forEach((item, index) => {
-                itemRows += `
-                    <tr class="${item.id}">
-                        <td>${index+1}</td>
-                        <td col-span-2>${item.name}</td>
-                        <td onchange="App.updateQty(event, ${item.price}, ${item.id})">
-                            <input name="qty" value="${item.qty}" type="number" />
-                        </td>
-                        <td>${item.price}</td>
-                        <td id="${item.id}" col-span-2>${ item.qty * item.price }</td>
-                    </tr>
-                `
-            })
-        }
-
-        $("#cartItems").html(itemRows)
-    })
-
-    $("#paynow").on('click', async (e) => {
-        e.preventDefault()
-
-        let phone = $("#phone").val()
-
-        // if(phone.length < 10 || phone.length !== 12){
-        //     $("#phone").addClass("is-invalid")
-        //     return
-        // }
-
-        const cart = JSON.parse(localStorage.getItem("cart"))
-
-        // total
-        let _total = 0
-        cart.forEach((item) => {
-            _total += parseInt(item.price) + parseInt(item.qty)
-        })
-
-        let order = {
-            order: cart,
-            total: _total,
-            phone,
-        }
-
-        const _response = await fetch("api/stk.php", {
-            method: 'post',
-            headers: { 'content-type': 'application/json', 'accept': 'application/json'},
-            body: JSON.stringify(order)
-        })
-
-        if(_response.status === 200) {
-            const res = await _response.json()
-
-            var interval;
-
-            let startTime = new Date().getTime()
-            let stopTime = new Date().getTime() + 25000;
-            let orderid = res.orderid
-            let stkreqres = res.stkreqres.CheckoutRequestID
-
-
-            const callback = async () => {
-                let now = new Date().getTime()
-
-                if(now > stopTime){
-                    clearInterval(interval)
-                    alert("Your payment session has timed out")
-                    return
-                }
-
-                // method 1
-                //- const poll = await fetch('api/orders/' + orderid + '-payment.json')
-
-                // if(poll.status == 200) {
-                //     const _poll = await poll.json()
-                //     const { Body } = _poll
-
-                //     if(Body.stkCallback.ResultCode !== 0){
-                //         alert(Body.stkCallback.ResultDesc)
-                //     }
-                //     if(Body.stkCallback.ResultCode === 0){
-                //         alert(Body.stkCallback.ResultDesc)
-                //         window.location.reload()
-                //     }
-                //     clearInterval(interval)
-                // } 
-
-                // method 2
-                const _poll = await fetch('api/polling.php?id=' + stkreqres)
-
-                if(_poll.status === 200) {
-                    const _res = await _poll.json()
-
-                    if(_res.errorCode){}
-                    else if(_res.ResultCode && _res.ResultCode == 0) {
-                        clearInterval(interval)
-                        alert(_res.ResultDesc)
-                        window.location.reload()
-                    } else if(_res.ResultCode && _res.ResultCode != 0) {
-                        clearInterval(interval)
-                        alert(_res.ResultDesc)
-                    }
-                    console.log(_res)
-                }
-
-                if(_poll.status >= 500) {
-                    clearInterval(interval)
-                    alert("Sorry we encountered an error")
-                }
-            }
-
-
-          
-
-            interval = setInterval(callback, 2000)
-
-        } else {
-            $("#err").html(`<p class="alert alert-danger">${_response.statusText}</p>`)
-        }
-
-    })
-
-
+    `)
 })
+    $("#cartModal").on("show.bs.modal", function (event) {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      let cartItems = "";
+      if (cart !== null) {
+        cart.forEach((item, index) => {
+          cartItems += `
+                  <tr class="${item.id}">
+                      <td>${index + 1}</td>
+                      <td colspan-3>${item.name}</td>
+                      <td onchange="App.updateQty(event, ${item.price}, ${
+            item.id
+          })" colspan-1><input class="form-control col-sm-2" name="qty" type="number" value="${
+            item.qty
+          }" /></td>
+                      <td col-span-1 id="${item.id}">${item.price * item.qty}</td>
+                  </tr>
+                  `;
+        });
+      }
+      $("#cartItems").html(cartItems);
+    });
+  
+    $("#paynow").on("click", async (e) => {
+      e.preventDefault();
+      // hide cartModal
+      const phone = $("#phone").val();
+  
+      if (phone.length < 10) {
+        $("#phone").addClass("is-invalid");
+        $("#phoneErr").html(
+          "<small class='text-danger'>Please enter a valid phone number</small>"
+        );
+        return;
+      }
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      const cartItems = JSON.parse(localStorage.getItem("cart"));
+  
+      // // find cart total
+  
+      let totalPrice = 0;
+      if (cartItems !== null) {
+        cartItems.forEach((item) => {
+          totalPrice += item.price * item.qty;
+        });
+      }
+  
+      // create order
+      const order = {
+        phone: phone,
+        cart: cart,
+        totalPrice: totalPrice,
+      };
+  
+      // // send order to server
+      const response = await fetch("api.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+  
+      // show mpesa modal
+      const _response = await response.json();
+      if (response.status === 200) {
+        $("#cartModal").modal("hide");
+        console.log(_response.resp);
+  
+        if (_response.resp.ResponseCode == "0") {
+          $("#mpesaModal").modal("show");
+          const data = response.resp;
+  
+          var interval;
+  
+          // time to star polling
+          let startTime = new Date().getTime();
+          // set time to stop polling
+          var stopTime = new Date().getTime() + 25000;
+  
+          const validate = async () => {
+            // get current time
+            let now = new Date().getTime();
+            // check if time is up
+            if (now >= stopTime) {
+              clearInterval(interval);
+              $("#mpesaModal").modal("hide");
+              alert("Sorry, your payment has timed out. Please try again");
+            }
+  
+            // 1. Method 1
+            // - Use the m-pesa endpoint
+            // - Use the transaction/order data
+  
+            let order = _response.order;
+  
+            //   try {
+            //     const result = await fetch("orders/" + order + "-payment.json");
+            //     const data = await result.json();
+  
+            //     if (data) {
+            //       clearInterval(interval);
+            //       const { Resultcode, ResultDesc } = data.Body.stkCallback;
+  
+            //       if (Resultcode == 0) {
+            //         alert("Payment Successful");
+            //         window.location.href = "index.php";
+            //       } else {
+            //         alert(ResultDesc);
+            //       }
+            //       console.log(data);
+            //     }
+            //   } catch (err) {
+            //     console.log(err);
+            //   }
+  
+            // method 2
+  
+            // - Use the m-pesa endpoint
+            // - Use the transaction/order data
+            try {
+              const _result = await fetch("pay/poll.php", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  order: order,
+                  MerchantRequestID: _response.resp.MerchantRequestID,
+                  CheckoutRequestID: _response.resp.CheckoutRequestID,
+                }),
+              });
+  
+              if (_result.status === 200) {
+                const _data = await _result.json();
+                if (_data) {
+                  if (
+                    _data.errorMessage == "The transaction is being processed"
+                  ) {
+                  }
+                  if (_data.ResponseCode == 0) {
+                    clearInterval(interval);
+  
+                    if (_data.ResultDesc == "Request cancelled by user") {
+                      alert("Payment Cancelled");
+                      window.location.href = "index.php";
+                    }
+                    if (
+                      _data.ResultDesc ==
+                      "The service request is processed successfully."
+                    ) {
+                      alert("Payment Successful");
+                      window.location.href = "index.php";
+                    }
+                    // /alert(_data.ResultDesc)
+                  }
+                  // console.log(_data);
+                } else {
+                  console.log("error");
+                }
+              }
+            } catch (err) {
+              console.log(err);
+              clearInterval(interval);
+  
+              alert(err.message);
+            }
+          };
+  
+          interval = setInterval(validate, 2000);
+        }
+      } else {
+        alert("An error occured while processing your order");
+      }
+    });
+  });
+  
