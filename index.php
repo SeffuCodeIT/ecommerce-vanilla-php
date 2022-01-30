@@ -54,10 +54,10 @@
                     <!-- Theme change button -->
                     <i class='bx bx-moon change-theme' id="theme-button"></i>
 
-                    <div class="nav__shop"    data-bs-toggle="modal" data-bs-target="#cartModal"  >
+                    <div class="nav__shop"    data-bs-toggle="modal" data-bs-target="#cartModal" style="font-family:sans-serif; font-size:10px; font-weight:500;" >
 
                         <i class='bx bx-shopping-bag'  
-                        class="btn btn-danger btn-block btn-lg mx-auto ">Ksh <span id="cartValue" style="font-family:sans-serif; font-size:10px; font-weight:500;">0.00</span> </i>
+                        class="btn btn-danger btn-block btn-lg mx-auto ">Ksh <span id="cartValue">0.00</span> </i>
 
                     </div>
 
