@@ -1,8 +1,8 @@
 <?php
     date_default_timezone_set("Africa/Nairobi");
     
-    define('CONSUMER_KEY', '3GPMSaKHarG85AYvZBZ2EFMS53tk56Ru');
-    define('CONSUMER_SECRET', 'NRAaYrHE9eaCtHGo');
+    define('CONSUMER_KEY', 'nk16Y74eSbTaGQgc9WF8j6FigApqOMWr');
+    define('CONSUMER_SECRET', '40fD1vRXCq90XFaU');
 
     $env = 0;
     $ssl = true;
