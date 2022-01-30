@@ -23,4 +23,4 @@
     $Password = base64_encode($BusinessShortCode.$Passkey.$Timestamp);
 
     /* lnmo api urls */
-    define('LNMO_CALLBACK_URL', 'https://jordan-mpesa.herokuapp.com//lnmo.php?oid=');
+    define('LNMO_CALLBACK_URL', 'https://jordan-mpesa.herokuapp.com/lnmo.php?oid=');
