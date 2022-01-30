@@ -431,6 +431,50 @@
             </section>
         </main>
 
+        <!--==================== PAYMENT MODAL ====================-->
+        <div class="modal fade" id="mpesaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background: transparent; border: none; margin-top: 42%">
+                <div class="modal-body">
+                    <style>
+                        p {
+                            color: #fff;
+                        }
+                    </style>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-center">
+                                <i style="font-size: 4em; color: #fff" class="bi bi-phone text-center"></i> <br />
+                                Awaiting your payment
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-center">
+                                <i style="font-size: 4em; color: #fff" class="bi bi-arrow-repeat"></i>
+                                <br />Processing your order
+                            </p>
+
+                        </div>
+                        <div>
+                            <p class="text-center">
+                                <i style="font-size: 4em; color: #fff" class="bi bi-basket3-fill"></i>
+                                <br />Completing Order
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <span class="text-white text-center d-flex align-items-center justify-items-center"> <span
+                        class="spinner-border text-white mr-5" role="status"></span> Hold tight, we're processing the
+                    payment.</span>
+            </div>
+        </div>
+    </div>
+
+        <!--==================== PAYMENT MODAL ====================-->
+
         <!--==================== FOOTER ====================-->
         <footer class="footer section">
             <div class="footer__container container grid">
