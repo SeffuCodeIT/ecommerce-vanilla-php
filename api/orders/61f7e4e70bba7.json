@@ -1,0 +1,22 @@
+{
+  "orderid": "61f7e4e70bba7",
+  "order": {
+    "order": [
+      {
+        "id": 1,
+        "name": "Jordan air",
+        "desc": "Thizs is nike air force.",
+        "price": 1,
+        "image": "product1.png",
+        "qty": 1
+      }
+    ],
+    "total": 2,
+    "phone": "254740408496"
+  },
+  "stkreqres": {
+    "requestId": "93952-17690411-1",
+    "errorCode": "500.002.1001",
+    "errorMessage": "Service is currently under maintenance. Please try again later"
+  }
+}
