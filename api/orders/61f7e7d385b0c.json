@@ -1,1 +1,24 @@
-{"orderid":"61f7e7d385b0c","order":{"order":[{"id":1,"name":"Jordan air","desc":"Thizs is nike air force.","price":1,"image":"product1.png","qty":1}],"total":2,"phone":"254740408496"},"stkreqres":{"MerchantRequestID":"8117-25442010-1","CheckoutRequestID":"ws_CO_310120221643019161","ResponseCode":"0","ResponseDescription":"Success. Request accepted for processing","CustomerMessage":"Success. Request accepted for processing"}}
+{
+  "orderid": "61f7e7d385b0c",
+  "order": {
+    "order": [
+      {
+        "id": 1,
+        "name": "Jordan air",
+        "desc": "Thizs is nike air force.",
+        "price": 1,
+        "image": "product1.png",
+        "qty": 1
+      }
+    ],
+    "total": 2,
+    "phone": "254740408496"
+  },
+  "stkreqres": {
+    "MerchantRequestID": "8117-25442010-1",
+    "CheckoutRequestID": "ws_CO_310120221643019161",
+    "ResponseCode": "0",
+    "ResponseDescription": "Success. Request accepted for processing",
+    "CustomerMessage": "Success. Request accepted for processing"
+  }
+}
